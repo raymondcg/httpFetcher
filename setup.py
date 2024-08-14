@@ -1,4 +1,6 @@
 from setuptools import setup
+from setuptools import find_packages
+
 
 setup(
     name='httpFetch',
@@ -8,7 +10,7 @@ setup(
     author='Raymond Gillett',
     author_email='raymondcgillett@protonmail.com',
     license='Apache 2.0',
-    packages=['httpFetch'],
+    packages=find_packages(exclude=['test']),
     install_requires=['beautifulsoup4','requests' ],
 
     classifiers=[
