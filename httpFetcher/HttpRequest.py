@@ -9,6 +9,11 @@ from httpFetcher.HttpFetcherInterface import HttpFetcherInterface
 class HttpRequest(HttpFetcherInterface):
     """ A simplistic implementation of HttpFetcherInterface that leverages the Python Request module.
 
+    # TODO Set the user agent dynamically.
+    # TODO Add in error handling logic
+    # TODO raise an error / Exception in some cases.
+    # TODO manage redirects, if the host is redirected, pass that info up and don't call that redirected host again.
+
     ...
 
     Attributes
