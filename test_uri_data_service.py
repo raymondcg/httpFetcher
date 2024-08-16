@@ -1,5 +1,6 @@
 import unittest
 from httpFetcher.UriDataService import UriDataService
+from unittest.mock import MagicMock
 
 from httpFetcher.HttpFetcherInterface import HttpFetcherInterface
 from httpFetcher.HttpRequest import HttpRequest
@@ -11,30 +12,28 @@ class TestUriDataService(unittest.TestCase):
     This class isn't intended to test the actual http fetcher logic, and as such will mock the http fetcher.
 
     """
-    uri_data_service : UriDataService
+    __uri_data_service : UriDataService
 
     def setUp(self):
         # Setup mock for httpFetcher, don't actually call http.
         # MockitoAnnotations.openMocks( this );
         # Setup uri_data_service to use in other tests in this file.
-        #this.dataRetrievalService = new DataRetrievalService( lookupDao, env );
-        pass # Just used to No-op the test, remove line when test is usable.
+        self.__uri_data_service = UriDataService( False )
 
     def test_allowedMusicalTest(self) :
         # Arrange
-        #String robotUrl = "http://www.musi-cal.com/robots.txt"
-        #String urlToTest = "http://www.musi-cal.com/"
-        #String robot = fileHelper.readFile( this.getClass().getResource( "/robots/musi-cal.txt" ).getFile() )
-        #when( lookupDao.getSite( robotUrl ) ).thenReturn( robot )
-        #when( lookupDao.getSite( urlToTest ) ).thenReturn( "Winner" )
+        robot_url : str = "http://www.musi-cal.com/robots.txt"
+        url_to_test : str = "http://www.musi-cal.com/"
+        #robot : str = fileHelper.readFile( this.getClass().getResource( "/robots/musi-cal.txt" ).getFile() )
+        #when( __uri_data_service.getSite( robot_url ) ).thenReturn( robot )
+        #when( __uri_data_service.get( url_to_test ) ).thenReturn( "Winner" )
 
         # Act
-        #String result = dataRetrievalService.getData( urlToTest )
+        result : str = self.__uri_data_service.get( url_to_test )
 
         # Assert
-        #verify( lookupDao, times( 2 ) ).getSite( anyString() )
-        #self.assertTrue( result.equals( "Winner" ) )
-        pass # Just used to No-op the test, remove line when test is usable.
+        #verify( __uri_data_service, times( 2 ) ).get( anyString() )
+        self.assertTrue( result == "Winner" )
 
     def test_notAllowedMusicalTest(self):
         # Arrange
