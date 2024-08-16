@@ -10,9 +10,11 @@ class HttpRequest(HttpFetcherInterface):
     """ A simplistic implementation of HttpFetcherInterface that leverages the Python Request module.
 
     # TODO Set the user agent dynamically.
+    # TODO Try with resources.
     # TODO Add in error handling logic
     # TODO raise an error / Exception in some cases.
     # TODO manage redirects, if the host is redirected, pass that info up and don't call that redirected host again.
+    # TODO change to a logger of some sort.
 
     ...
 
@@ -23,21 +25,20 @@ class HttpRequest(HttpFetcherInterface):
 
     Methods
     -------
-    says(sound=None)
-        Prints the animals name and what sound it makes
+    get(Uri)
+        Gets the content from a given URI
     """
 
     # Class variables
     httpEnabled : bool = False
-    # LOGGER
 
     def __init__(self, http_enabled : bool):
         self.httpEnabled = http_enabled
 
-    def get( self, url: str ):
+    def get(self, uri: str) -> str :
         r"""Sends a GET request.
 
-        :param url: URL for the new :class:`Request` object.
+        :param uri: URI for the new :class:`Request` object.
         :return: :class:`Response <Response>` object
         :rtype: requests.Response
         """
@@ -49,11 +50,11 @@ class HttpRequest(HttpFetcherInterface):
             try  :
                 #getRequest.addHeader( "User-Agent", env.getProperty( "useragent" ) )
                 # Add header with associated user agent details.
-                response = requests.get(url)
+                response = requests.get(uri)
 
                 if response.status_code > 299:
-                    print( "URL: {}\nResponse\n{}", url, response ) # info
-                    #throw new RuntimeException( String.format( "%s", response.getStatusLine().getStatusCode() ) )
+                    print( "URL: {}\nResponse\n{}", uri, response) # info
+                    raise RuntimeError( response.status_code )
 
             except requests.exceptions.Timeout as e:
                 # Maybe set up for a retry, or continue in a retry loop
@@ -66,8 +67,8 @@ class HttpRequest(HttpFetcherInterface):
                 print(e)
                 raise SystemExit(e)
 
-            print (response) # Trace
-            return response
+            print (response.text) # Trace
+            return response.text
         else:
             print("******** HTTP calls are disabled in the application.yml. ********") # WARN
             return ""
